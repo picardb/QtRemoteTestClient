@@ -2,5 +2,5 @@
 
 #include <QString>
 
-const QString DNS_SD_REG_TYPE = "_toto._tcp";
+const QString DNS_SD_REG_TYPE = "_qtremote._tcp";
 
