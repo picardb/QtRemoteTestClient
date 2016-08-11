@@ -4,16 +4,16 @@
 #include <QVector>
 #include <QSocketNotifier>
 #include "dns_sd.h"
-#include "DnsServiceRecord.h"
+#include "DnsServiceRecordList.h"
 
 class DnsServiceBrowser : public QObject
 {
 	Q_OBJECT
 
 private:
-	QVector<DnsServiceRecord>	m_recordList;
-    DNSServiceRef				m_serviceRef;
-	QSocketNotifier				*m_pNotifier;
+    DnsServiceRecordList	m_recordList;
+    DNSServiceRef			m_serviceRef;
+    QSocketNotifier			*m_pNotifier;
 
 	static void DNSSD_API browseCallback(DNSServiceRef sdRef, DNSServiceFlags flags,
 													 uint32_t interfaceIndex, DNSServiceErrorType errorCode,
@@ -24,11 +24,10 @@ private:
 public:
 	DnsServiceBrowser(QObject *parent = 0);
 
-	void start();
-	const QVector<DnsServiceRecord>& getList() const { return m_recordList; }
+    void start();
+    DnsServiceRecordList* getRecordList() { return &m_recordList; }
 
 signals:
-	void listUpdated();
 	void error(const QString& );
 
 private slots:

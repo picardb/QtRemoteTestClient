@@ -13,32 +13,24 @@ DeviceWidget::DeviceWidget(Model *pModel, QWidget *parent)
 	QVBoxLayout *pBoxLayout = new QVBoxLayout;
 
 	/* Create children widgets */
-	QGroupBox *pDeviceBox = new QGroupBox("Available devices");
-    m_pDeviceList = new QListWidget;
+    QGroupBox *pDeviceBox = new QGroupBox("Available devices");
+    m_pDeviceList = new QTableView;
+    m_pDeviceList->setModel(pModel->dnsBrowserGetRecordList());
+    m_pDeviceList->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_pDeviceList->setSelectionMode(QAbstractItemView::SingleSelection);
+    m_pDeviceList->setShowGrid(false);
+    m_pDeviceList->verticalHeader()->setVisible(false);
+    //m_pDeviceList->setModelColumn(DnsServiceRecord::MEMBER_INDEX_NAME);
     pBoxLayout->addWidget(m_pDeviceList);
 	pDeviceBox->setLayout(pBoxLayout);
 	pMainLayout->addWidget(pDeviceBox);
 
 	/* Setup widget */
-	setLayout(pMainLayout);
-
-	/* Connect model signals */
-	connect(pModel, SIGNAL(dnsBrowserListUpdated()),
-			  this, SLOT(onDnsBrowserListUpdated()));
+    setLayout(pMainLayout);
 }
 
 void DeviceWidget::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
 	m_pModel->dnsBrowserStart();
-}
-
-void DeviceWidget::onDnsBrowserListUpdated() {
-    m_pDeviceList->clear();
-
-	/* Get the new list of services and add all to the list widget */
-	const QVector<DnsServiceRecord>& list = m_pModel->dnsBrowserGetList();
-    for (int i = 0 ; i < list.size() ; i++) {
-        m_pDeviceList->addItem(list[i].name());
-	}
 }

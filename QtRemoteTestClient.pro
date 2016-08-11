@@ -11,7 +11,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = QtRemoteTestClient
 TEMPLATE = app
 
-LIBS += -L$$PWD\lib -ldnssd
+LIBS += -L$$PWD\lib -ldnssd -lws2_32 -liphlpapi
 
 SOURCES += \
     src/main.cpp \
@@ -20,7 +20,9 @@ SOURCES += \
     src/widgets/MainWidget.cpp \
     src/widgets/DeviceWidget.cpp \
     src/model/DnsServiceRecord.cpp \
-    src/model/DnsServiceBrowser.cpp
+    src/model/DnsServiceBrowser.cpp \
+    src/model/DnsServiceResolver.cpp \
+    src/model/DnsServiceRecordList.cpp
 
 HEADERS  += \
     src/widgets/MainWindow.h \
@@ -29,4 +31,6 @@ HEADERS  += \
     src/widgets/DeviceWidget.h \
     src/model/DnsServiceRecord.h \
     src/constants.h \
-    src/model/DnsServiceBrowser.h
+    src/model/DnsServiceBrowser.h \
+    src/model/DnsServiceResolver.h \
+    src/model/DnsServiceRecordList.h

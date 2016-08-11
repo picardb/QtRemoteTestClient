@@ -1,6 +1,8 @@
 #include "DnsServiceBrowser.h"
 
 #include <QApplication>
+#include <winsock2.h>
+#include <iphlpapi.h>
 #include "../constants.h"
 
 DnsServiceBrowser::DnsServiceBrowser(QObject *parent)
@@ -35,7 +37,7 @@ void DnsServiceBrowser::start() {
 
 
 
-void DnsServiceBrowser::browseCallback(DNSServiceRef , DNSServiceFlags flags, uint32_t , DNSServiceErrorType errorCode, const char *serviceName, const char *regtype, const char *replyDomain, void *context)
+void DnsServiceBrowser::browseCallback(DNSServiceRef , DNSServiceFlags flags, uint32_t interfaceIndex, DNSServiceErrorType errorCode, const char *serviceName, const char *regtype, const char *replyDomain, void *context)
 {
     DnsServiceBrowser *pBrowser = static_cast<DnsServiceBrowser*>(context);
 
@@ -44,22 +46,21 @@ void DnsServiceBrowser::browseCallback(DNSServiceRef , DNSServiceFlags flags, ui
 		return;
 	}
 
-	DnsServiceRecord rec(serviceName, regtype, replyDomain);
+    /* Convert interface index to alias */
+    NET_LUID interfaceLuid;
+    wchar_t interfaceAlias[IF_MAX_STRING_SIZE + 1];
+    ConvertInterfaceIndexToLuid(interfaceIndex, &interfaceLuid);
+    ConvertInterfaceLuidToAlias(&interfaceLuid, interfaceAlias, IF_MAX_STRING_SIZE + 1);
+
+    DnsServiceRecord rec(serviceName, regtype, replyDomain, interfaceAlias);
 	/* Add new service record to the list */
 	if (flags & kDNSServiceFlagsAdd) {
-        pBrowser->m_recordList.append(rec);
+        pBrowser->m_recordList.add(rec);
 	}
 	/* Remove service record from the list */
 	else {
-        if (pBrowser->m_recordList.contains(rec)) {
-            pBrowser->m_recordList.removeAll(rec);
-		}
-	}
-
-	/* If necessary, emit the updated signal */
-	if (!(flags & kDNSServiceFlagsMoreComing)) {
-        emit pBrowser->listUpdated();
-	}
+        pBrowser->m_recordList.remove(rec);
+    }
 }
 
 void DnsServiceBrowser::onSockNotifierActivated() {

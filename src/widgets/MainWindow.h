@@ -10,9 +10,9 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 
 private:
-	Model			*m_pModel;
+    Model		*m_pModel;
 
-	MainWidget	*m_pCentralWidget;
+    MainWidget  *m_pCentralWidget;
 
 public:
 	MainWindow(Model *pModel, QWidget *parent = 0);
