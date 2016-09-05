@@ -18,4 +18,6 @@ public:
 
     void add(const DnsServiceRecord& record);
     void remove(const DnsServiceRecord& record);
+
+    const DnsServiceRecord& operator[](int index) const { return m_list[index]; }
 };

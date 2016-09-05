@@ -13,7 +13,6 @@ class DnsServiceBrowser : public QObject
 private:
     DnsServiceRecordList	m_recordList;
     DNSServiceRef			m_serviceRef;
-    QSocketNotifier			*m_pNotifier;
 
 	static void DNSSD_API browseCallback(DNSServiceRef sdRef, DNSServiceFlags flags,
 													 uint32_t interfaceIndex, DNSServiceErrorType errorCode,
@@ -26,6 +25,7 @@ public:
 
     void start();
     DnsServiceRecordList* getRecordList() { return &m_recordList; }
+    const DnsServiceRecord& getRecord(int index) const { return m_recordList[index]; }
 
 signals:
 	void error(const QString& );

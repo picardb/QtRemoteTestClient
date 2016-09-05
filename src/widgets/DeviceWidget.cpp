@@ -20,7 +20,8 @@ DeviceWidget::DeviceWidget(Model *pModel, QWidget *parent)
     m_pDeviceList->setSelectionMode(QAbstractItemView::SingleSelection);
     m_pDeviceList->setShowGrid(false);
     m_pDeviceList->verticalHeader()->setVisible(false);
-    //m_pDeviceList->setModelColumn(DnsServiceRecord::MEMBER_INDEX_NAME);
+    connect(m_pDeviceList, SIGNAL(doubleClicked(const QModelIndex&)),
+            this, SLOT(onDeviceListDoubleClicked(const QModelIndex&)));
     pBoxLayout->addWidget(m_pDeviceList);
 	pDeviceBox->setLayout(pBoxLayout);
 	pMainLayout->addWidget(pDeviceBox);
@@ -33,4 +34,9 @@ void DeviceWidget::showEvent(QShowEvent *event)
 {
 	QWidget::showEvent(event);
 	m_pModel->dnsBrowserStart();
+}
+
+void DeviceWidget::onDeviceListDoubleClicked(const QModelIndex &index)
+{
+    m_pModel->dnsResolverResolveRecord(m_pModel->dnsBrowserGetRecord(index.row()));
 }

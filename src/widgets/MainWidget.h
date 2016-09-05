@@ -16,4 +16,5 @@ public:
 
 private slots:
 	void onDnsBrowserError(const QString& str);
+    void onDnsResolverResolved(const QHostInfo& hostInfo, int port);
 };

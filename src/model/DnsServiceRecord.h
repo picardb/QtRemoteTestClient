@@ -8,7 +8,7 @@ private:
 	QString	m_name;
 	QString	m_type;
 	QString	m_domain;
-    QString m_interfaceAlias;
+    quint32 m_interfaceIndex;
 
 public:
     enum membersIndexes {
@@ -19,7 +19,7 @@ public:
     };
 
 	DnsServiceRecord();
-    DnsServiceRecord(const char name[], const char type[], const char domain[], const wchar_t interfaceAlias[]);
+    DnsServiceRecord(const char name[], const char type[], const char domain[], const quint32 interfaceIndex);
 	DnsServiceRecord(const DnsServiceRecord& other);
 
 	DnsServiceRecord& operator=(const DnsServiceRecord& other);
@@ -28,7 +28,7 @@ public:
 	const QString& name() const { return m_name; }
 	const QString& type() const { return m_type; }
 	const QString& domain() const { return m_domain; }
-    const QString& interfaceAlias() const { return m_interfaceAlias; }
+    quint32 interfaceIndex() const { return m_interfaceIndex; }
 
     static int membersCount() { return 4; }
     static QString membersName(int index);

@@ -1,5 +1,8 @@
 #include "DnsServiceRecordList.h"
 
+#include <winsock2.h>
+#include <iphlpapi.h>
+
 DnsServiceRecordList::DnsServiceRecordList(QObject *parent)
     : QAbstractTableModel(parent)
 {
@@ -17,6 +20,11 @@ int DnsServiceRecordList::columnCount(const QModelIndex &) const
 
 QVariant DnsServiceRecordList::data(const QModelIndex &index, int role) const
 {
+    /* Interface-related variables */
+    quint32 interfaceIndex;
+    NET_LUID interfaceLuid;
+    wchar_t interfaceAlias[IF_MAX_STRING_SIZE + 1];
+
     if (role == Qt::DisplayRole) {
         switch (index.column()) {
         case DnsServiceRecord::MEMBER_INDEX_NAME:
@@ -29,7 +37,12 @@ QVariant DnsServiceRecordList::data(const QModelIndex &index, int role) const
             return m_list.at(index.row()).domain();
 
         case DnsServiceRecord::MEMBER_INDEX_INTERFACE:
-            return m_list.at(index.row()).interfaceAlias();
+            /* Convert interface index to alias */
+            interfaceIndex = m_list.at(index.row()).interfaceIndex();
+            ConvertInterfaceIndexToLuid(interfaceIndex, &interfaceLuid);
+            ConvertInterfaceLuidToAlias(&interfaceLuid, interfaceAlias, IF_MAX_STRING_SIZE + 1);
+
+            return QString::fromWCharArray(interfaceAlias);
 
         default:
             return QVariant();

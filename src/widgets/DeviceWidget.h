@@ -19,4 +19,7 @@ protected:
 
 public:
     DeviceWidget(Model *pModel, QWidget *parent = 0);
+
+private slots:
+    void onDeviceListDoubleClicked(const QModelIndex& index);
 };
