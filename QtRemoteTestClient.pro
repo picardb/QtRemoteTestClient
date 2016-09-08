@@ -13,24 +13,28 @@ TEMPLATE = app
 
 LIBS += -L$$PWD\lib -ldnssd -lws2_32 -liphlpapi
 
+INCLUDEPATH += src/
+
 SOURCES += \
     src/main.cpp \
     src/widgets/MainWindow.cpp \
-    src/model/Model.cpp \
     src/widgets/MainWidget.cpp \
     src/widgets/DeviceWidget.cpp \
-    src/model/DnsServiceRecord.cpp \
-    src/model/DnsServiceBrowser.cpp \
-    src/model/DnsServiceResolver.cpp \
-    src/model/DnsServiceRecordList.cpp
+    src/model/Model.cpp \
+    src/model/network/DnsServiceBrowser.cpp \
+    src/model/network/DnsServiceRecord.cpp \
+    src/model/network/DnsServiceRecordList.cpp \
+    src/model/network/DnsServiceResolver.cpp \
+    src/model/network/Network.cpp
 
 HEADERS  += \
+    src/constants.h \
     src/widgets/MainWindow.h \
-    src/model/Model.h \
     src/widgets/MainWidget.h \
     src/widgets/DeviceWidget.h \
-    src/model/DnsServiceRecord.h \
-    src/constants.h \
-    src/model/DnsServiceBrowser.h \
-    src/model/DnsServiceResolver.h \
-    src/model/DnsServiceRecordList.h
+    src/model/Model.h \
+    src/model/network/DnsServiceBrowser.h \
+    src/model/network/DnsServiceRecord.h \
+    src/model/network/DnsServiceRecordList.h \
+    src/model/network/DnsServiceResolver.h \
+    src/model/network/Network.h

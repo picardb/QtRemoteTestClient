@@ -1,11 +1,10 @@
 #include "MainWindow.h"
 
-MainWindow::MainWindow(Model *pModel, QWidget *parent)
-	: QMainWindow(parent),
-	  m_pModel(pModel)
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
 {
 	/* Create central widget */
-	m_pCentralWidget = new MainWidget(pModel);
+    m_pCentralWidget = new MainWidget;
 	setCentralWidget(m_pCentralWidget);
 }
 

@@ -1,7 +1,7 @@
 #include "DnsServiceBrowser.h"
 
 #include <QApplication>
-#include "../constants.h"
+#include "constants.h"
 
 DnsServiceBrowser::DnsServiceBrowser(QObject *parent)
 	: QObject(parent)

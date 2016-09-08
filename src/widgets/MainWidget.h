@@ -1,20 +1,15 @@
 #pragma once
 
 #include <QWidget>
-
-#include "../model/Model.h"
+#include <QHostInfo>
 
 class MainWidget : public QWidget
 {
-	Q_OBJECT
-
-private:
-	Model				*m_pModel;
+    Q_OBJECT
 
 public:
-	MainWidget(Model *pModel, QWidget *parent = 0);
+    MainWidget(QWidget *parent = 0);
 
 private slots:
-	void onDnsBrowserError(const QString& str);
-    void onDnsResolverResolved(const QHostInfo& hostInfo, int port);
+    void onNetworkError(const QString& msg);
 };
