@@ -3,6 +3,7 @@
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include "DeviceWidget.h"
+#include "AudioWidget.h"
 #include "model/Model.h"
 
 MainWidget::MainWidget(QWidget *parent)
@@ -14,6 +15,8 @@ MainWidget::MainWidget(QWidget *parent)
 	/* Create children widgets */
     DeviceWidget *pDeviceWidget = new DeviceWidget;
 	pLayout->addWidget(pDeviceWidget);
+    AudioWidget *pAudioWidget = new AudioWidget;
+    pLayout->addWidget(pAudioWidget);
 
 	/* Connect model signals */
     connect(&Model::network(), SIGNAL(error(QString)),

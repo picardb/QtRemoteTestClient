@@ -15,6 +15,7 @@ private:
     QTcpSocket			m_tcpSocket;
     QHostAddress        m_address;
     int                 m_port;
+    QString             m_deviceName;
     bool                m_isConnecting;
 
 public:
@@ -23,6 +24,7 @@ public:
     void startDnsBrowsing() { m_dnsBrowser.start(); }
     DnsServiceRecordList* getDnsRecordList() { return m_dnsBrowser.getRecordList(); }
     void connectToDevice(int index);
+    void sendPacket(const QByteArray& packet);
 
 private slots:
     void onDnsResolverError();
@@ -33,7 +35,8 @@ private slots:
 signals:
     void resolvingDnsRecord(const QString& name);
     void connecting(const QHostAddress& address, int port);
-    void connected(const QHostAddress& address, int port);
+    void connected(const QString& deviceName);
     void disconnected();
     void error(const QString& msg);
+    void packetSent();
 };

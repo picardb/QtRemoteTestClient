@@ -23,6 +23,6 @@ private slots:
     void onDeviceListDoubleClicked(const QModelIndex& index);
     void onNetworkResolving(const QString& name);
     void onNetworkConnecting(const QHostAddress& address, int port);
-    void onNetworkConnected(const QHostAddress& address, int port);
+    void onNetworkConnected(const QString& deviceName);
     void onNetworkDisconnected();
 };

@@ -2,6 +2,7 @@
 
 #include <winsock2.h>
 #include <iphlpapi.h>
+#include <netioapi.h>
 
 DnsServiceRecordList::DnsServiceRecordList(QObject *parent)
     : QAbstractTableModel(parent)

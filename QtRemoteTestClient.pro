@@ -25,7 +25,9 @@ SOURCES += \
     src/model/network/DnsServiceRecord.cpp \
     src/model/network/DnsServiceRecordList.cpp \
     src/model/network/DnsServiceResolver.cpp \
-    src/model/network/Network.cpp
+    src/model/network/Network.cpp \
+    src/model/request/Request.cpp \
+    src/widgets/AudioWidget.cpp
 
 HEADERS  += \
     src/constants.h \
@@ -37,4 +39,6 @@ HEADERS  += \
     src/model/network/DnsServiceRecord.h \
     src/model/network/DnsServiceRecordList.h \
     src/model/network/DnsServiceResolver.h \
-    src/model/network/Network.h
+    src/model/network/Network.h \
+    src/model/request/Request.h \
+    src/widgets/AudioWidget.h

@@ -41,6 +41,18 @@ void Network::connectToDevice(int index) {
     m_dnsResolver.resolveRecord(record);
     emit resolvingDnsRecord(record.name());
     m_isConnecting = true;
+
+    /* Store device name */
+    m_deviceName = record.name();
+}
+
+void Network::sendPacket(const QByteArray &packet) {
+    int written = m_tcpSocket.write(packet);
+    if (written == packet.size()) {
+        emit packetSent();
+    } else {
+        emit error("Error while transmitting request packet");
+    }
 }
 
 void Network::onDnsResolverError() {
@@ -74,7 +86,7 @@ void Network::onDnsResolverResolved(const QHostInfo &hostInfo, int port) {
 
 void Network::onSocketConnected() {
     m_isConnecting = false;
-    emit connected(m_address, m_port);
+    emit connected(m_deviceName);
 }
 
 void Network::onSocketDisconnected() {

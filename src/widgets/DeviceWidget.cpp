@@ -35,8 +35,8 @@ DeviceWidget::DeviceWidget(QWidget *parent)
             this, SLOT(onNetworkResolving(QString)));
     connect(&Model::network(), SIGNAL(connecting(QHostAddress,int)),
             this, SLOT(onNetworkConnecting(QHostAddress,int)));
-    connect(&Model::network(), SIGNAL(connected(QHostAddress,int)),
-            this, SLOT(onNetworkConnected(QHostAddress,int)));
+    connect(&Model::network(), SIGNAL(connected(QString)),
+            this, SLOT(onNetworkConnected(QString)));
     connect(&Model::network(), SIGNAL(disconnected()),
             this, SLOT(onNetworkDisconnected()));
 
@@ -63,8 +63,8 @@ void DeviceWidget::onNetworkConnecting(const QHostAddress &address, int port) {
     m_pStatusLabel->setText("Status: Connecting to " + address.toString() + ":" + QString::number(port));
 }
 
-void DeviceWidget::onNetworkConnected(const QHostAddress &address, int port) {
-    m_pStatusLabel->setText("Status: Connected to " + address.toString() + ":" + QString::number(port));
+void DeviceWidget::onNetworkConnected(const QString& deviceName) {
+    m_pStatusLabel->setText("Status: Connected to " + deviceName);
 }
 
 void DeviceWidget::onNetworkDisconnected() {
