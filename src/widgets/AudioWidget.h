@@ -16,6 +16,6 @@ public:
     AudioWidget(QWidget *parent = 0);
 
 private slots:
-    void onRaiseButtonClicked() { Model::request().raiseAudio(5); }
-    void onLowerButtonClicked() {Model::request().lowerAudio(5); }
+    void onRaiseButtonClicked() { Model::control().audioRaiseVolume(5); }
+    void onLowerButtonClicked() {Model::control().audioLowerVolume(5); }
 };

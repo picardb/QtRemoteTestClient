@@ -46,12 +46,26 @@ void Network::connectToDevice(int index) {
     m_deviceName = record.name();
 }
 
-void Network::sendPacket(const QByteArray &packet) {
+void Network::sendRequest(const Request& request) {
+    /* Check socket status */
+    if (!m_tcpSocket.isOpen()) {
+        return;
+    }
+
+    /* Prepare packet */
+    QByteArray packet;
+    packet.append((char)request.system);
+    packet.append((char)request.command);
+    packet.append((char)((request.length & 0xFF00) >> 8));
+    packet.append((char)(request.length & 0xFF));
+    packet.append(request.data);
+
+    /* Send packet */
     int written = m_tcpSocket.write(packet);
     if (written == packet.size()) {
         emit packetSent();
     } else {
-        emit error("Error while transmitting request packet");
+        emit error("Error while sending request");
     }
 }
 

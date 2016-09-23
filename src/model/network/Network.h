@@ -1,9 +1,10 @@
 #pragma once
 
 #include <QObject>
+#include <QTcpSocket>
 #include "DnsServiceBrowser.h"
 #include "DnsServiceResolver.h"
-#include <QTcpSocket>
+#include "Request.h"
 
 class Network : public QObject
 {
@@ -24,7 +25,7 @@ public:
     void startDnsBrowsing() { m_dnsBrowser.start(); }
     DnsServiceRecordList* getDnsRecordList() { return m_dnsBrowser.getRecordList(); }
     void connectToDevice(int index);
-    void sendPacket(const QByteArray& packet);
+    void sendRequest(const Request& request);
 
 private slots:
     void onDnsResolverError();
