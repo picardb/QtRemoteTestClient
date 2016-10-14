@@ -23,6 +23,10 @@ AudioWidget::AudioWidget(QWidget *parent)
             this, SLOT(onLowerButtonClicked()));
     pAudioBox->setLayout(pBoxLayout);
     pMainLayout->addWidget(pAudioBox);
+    m_pMuteButton = new QPushButton("Mute volume");
+    pBoxLayout->addWidget(m_pMuteButton);
+    connect(m_pMuteButton, SIGNAL(clicked(bool)),
+            this, SLOT(onMuteButtonClicked()));
 
     /* Setup widget */
     setLayout(pMainLayout);

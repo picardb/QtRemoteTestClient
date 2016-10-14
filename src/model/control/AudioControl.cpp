@@ -43,3 +43,14 @@ void AudioControl::setVolume(unsigned char percentage) {
     /* Send request */
     Model::network().sendRequest(req);
 }
+
+void AudioControl::muteVolume() {
+    /* Prepare request */
+    Request req;
+    req.system = SYSTEM_ID;
+    req.command = CMD_ID_MUTE_VOL;
+    req.length = 0;
+
+    /* Send request */
+    Model::network().sendRequest(req);
+}
